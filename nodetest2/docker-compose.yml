@@ -1,0 +1,22 @@
+version: "2"
+services:
+  web:
+    build: .
+    container_name: "webapp"
+    ports:
+      - "3000:3000"
+    links:
+      - mongo
+    depends_on:
+      - mongo
+  mongo:
+    image: mongo:latest
+    container_name: mongodb
+    environment:
+      - MONGO_DATA_DIR=/Users/robertmarchetti/Node/nodetest2/data
+      - MONGO_LOG_DIR=/dev/null
+    volumes:
+      - ./data:/data/db
+    ports:
+      - "27017:27017"
+    command: mongod --smallfiles
